@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <title>OkMyKey</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./styles.css">
+
+  <!-- Scripts -->
+  <script>
+    delete module.exports
+  </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/f6e3bd48b9.js"></script>
+  <script src="./window.js" charset="utf-8"></script>
+
+</head>
+
+<body>
+
+  <div class="right-aligned-buttons">
+
+    <label id="ports-hint" ports-hintclass="">Select the device</label>
+    <i id="ports-hint-icon" class="fas fa-arrow-circle-right" style="vertical-align: middle;"></i>
+
+    <label id="ports-error"></label>
+
+    <div class="btn-group" role="group">
+      <div class="btn-group" role="group">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="ports-selection" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">Serial Ports</button>
+        <div class="dropdown-menu" aria-labelledby="ports-selection" id="ports-selection-list">
+        </div>
+      </div>
+      <button type="button" id="refresh-ports" class="btn btn-secondary fas fa-sync-alt"></button>
+    </div>
+  </div>
+
+
+
+  <div id="button-selection-container" style="display: none;">
+    <ul id="keyboard">
+
+      <li class="letter">S5</li>
+      <li class="letter">S6</li>
+      <li class="letter">S7</li>
+      <li class="letter">S8</li>
+
+      <li class="letter">S4</li>
+      <li class="letter">S3</li>
+      <li class="letter">S2</li>
+      <li class="letter">S1</li>
+    </ul>
+  </div>
+
+  <div id="settings-area" style="display: none;">
+    <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+      <label class="btn btn-secondary active">
+        <input type="radio" name="button-modes" id="press-mode" value="press-mode" autocomplete="off" checked>Press
+        Mode</label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="button-modes" id="print-mode" value="print-mode" autocomplete="off">Print Mode</label>
+    </div>
+
+    <div id="settings-area-mode">
+      <div id="press-mode-settings" class="button-mode-settings">
+        <div class="input-group">
+          <input type="text" id="press-mode-input" class="form-control command-input" maxlength="50"
+            placeholder="Key1+Key2+..."></input>
+          <div class="input-group-append">
+            <button type="button" id="refresh-ports" data-toggle="dropdown" class="btn btn-secondary dropdown-toggle"><a
+                class="fas fa-keyboard"></a></button>
+            <div id="key-selection-list" class="dropdown-menu">
+              <a class="dropdown-item" name="press-mode-special-key" href="#">Ctrl</a>
+              <a class="dropdown-item" name="press-mode-special-key" href="#">Alt</a>
+              <a class="dropdown-item" name="press-mode-special-key" href="#">Shift</a>
+              <a class="dropdown-item" name="press-mode-special-key" href="#">Tab</a>
+              <a class="dropdown-item" name="press-mode-special-key" href="#">Win</a>
+              <a class="dropdown-item" name="press-mode-special-key" href="#">Backspace</a>
+              <a class="dropdown-item" name="press-mode-special-key" href="#">Up</a>
+              <a class="dropdown-item" name="press-mode-special-key" href="#">Down</a>
+              <a class="dropdown-item" name="press-mode-special-key" href="#">Left</a>
+              <a class="dropdown-item" name="press-mode-special-key" href="#">Right</a>
+              <a class="dropdown-item" name="press-mode-special-key" href="#">FX</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="print-mode-settings" style="display: none;">
+        <textarea rows="2" id="text-input" maxlength="110" class="form-control text-input"
+          placeholder="Enter the text to be printed..."></textarea>
+      </div>
+    </div>
+
+    <div id="action-buttons">
+
+      <div class="right-aligned-buttons" id="device-data-controls-confirmation" style="margin-right: 0px;">
+        <div class="btn-group" role="group">
+          <button type="button" id="cancel-settings" class="btn btn-dark">Cancel</i></button>
+          <button type="button" id="confirm-settings" class="btn btn-warning">Confirm</i></button>
+        </div>
+      </div>
+
+      <div class="right-aligned-buttons" id="device-data-controls" style="display: none; margin-right: 0px;">
+        <div class="btn-group" role="group">
+          <button type="button" id="save-settings" class="btn btn-secondary">Save <i class="fas fa-save"></i></button>
+          <button type="button" id="upload-settings" class="btn btn-secondary">Read <i
+              class="fas fa-upload"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</html>
