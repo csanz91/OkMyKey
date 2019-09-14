@@ -2,7 +2,7 @@ const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
 
-require('electron-reload')(__dirname);
+// require('electron-reload')(__dirname);
 
 let window = null
 
