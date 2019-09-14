@@ -1,0 +1,97 @@
+html, body, .container-fluid {
+  background-color: #D6D8DC;
+}
+
+#button-selection-container {
+  margin: 20px auto;
+  width: 360px;
+  height: 180px;
+}
+
+#keyboard {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#keyboard li {
+  float: right;
+  margin: 5px;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #f9f9f9;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+#keyboard li:hover {
+  position: relative;
+  top: 1px;
+  left: 1px;
+  border-color: #e5e5e5;
+  cursor: pointer;
+}
+
+.selected {
+  position: relative;
+  top: 1px;
+  left: 1px;
+  border-color: #e5e5e5;
+  background: #cecece !important;
+  cursor: pointer;
+}
+
+#settings-area {
+  margin: 10px auto;
+  width: 80%;
+  height: 150px;
+  border: 1px solid #6c757d;
+  -moz-border-radius: .4rem;
+  -webkit-border-radius: .4rem;
+}
+
+#settings-area-mode {
+  height: 110px;
+  text-align: center;
+}
+
+.button-mode-settings{
+  display: inline-flex;
+  margin: 30px;
+}
+
+.text-input {
+  font-size: 16px;
+  height: 110px !important;
+}
+
+.right-aligned-buttons{
+    margin: 10px;
+    text-align: end;
+}
+
+#ports-error{
+  color: red;
+  margin: auto 10px;
+  vertical-align: middle
+}
+
+#ports-hint{
+  font-size: 22px;
+  text-align: start;
+  margin: auto 10px;
+  vertical-align: middle;
+}
+
+.command-input{
+  width: 90px;
+  text-align: center;
+}
+
+#action-buttons{
+  display: inline-flex;
+  float: right;
+}
