@@ -38,3 +38,7 @@ app.once('ready', () => {
     window.show()
   })
 })
+
+app.on('window-all-closed', () => {
+  app.quit();
+});
