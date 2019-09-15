@@ -1,5 +1,7 @@
 const serialport = require('serialport')
 const Delimiter = require('@serialport/parser-delimiter')
+const { dialog } = require('electron').remote
+var fs = require('fs');
 
 const PRESS_MODE = "1";
 const PRINT_MODE = "2";
@@ -61,6 +63,53 @@ function getKeyCode(keyName) {
       return String.fromCharCode(keyCode); // fromCharCode is needed becausebecause the keysMap uses the hex representation for more clarity
   }
   return keyName;
+}
+
+function exportSettings() {
+  // You can obviously give a direct path without use the dialog (C:/Program Files/path/myfileexample.txt)
+  dialog.showSaveDialog((fileName) => {
+    if (fileName === undefined) {
+      console.log("You didn't save the file");
+      return;
+    }
+
+    var settings = "";
+    for (let i = 0; i < deviceInfo.buttonsNum; i++) {
+      settings += `${buttonsSettings[i].toRaw()}\n`;
+    }
+
+    // fileName is a string that contains the path and filename created in the save file dialog.  
+    fs.writeFile(fileName, settings, (err) => {
+      if (err) {
+        alert("An error ocurred creating the file " + err.message)
+      }
+    });
+  });
+}
+
+function importSettings() {
+  dialog.showOpenDialog((fileNames) => {
+    // fileNames is an array that contains all the selected files
+    if (fileNames === undefined) {
+      console.log("No file selected");
+      return;
+    }
+
+    fs.readFile(fileNames[0], 'utf-8', (err, data) => {
+      if (err) {
+        alert("An error ocurred reading the file :" + err.message);
+        return;
+      }
+
+      var lines = data.split('\n');
+      for (var i = 0; i < lines.length; i++) {
+        if (!lines[i]) continue;
+        decodeButtonSettings(lines[i]);
+        if (selectedKey)
+          loadButtonSettings();
+      }
+    });
+  });
 }
 
 class ButtonSetting {
@@ -147,10 +196,10 @@ function onPortOpened(portName) {
   $('#ports-hint').hide();
   $('#ports-hint-icon').hide();
   $('#button-selection-container').show();
+  $('#device-data-transfer').show();
 }
 
 function onPortClosed() {
-  portSelected = "";
   $('#ports-error').html("");
   $('#ports-selection').text("Serial Ports");
   $('#ports-hint').show();
@@ -160,6 +209,7 @@ function onPortClosed() {
   $('#settings-area-mode').hide();
   $('#device-data-controls').hide();
   $('#device-data-controls-confirmation').hide();
+  $('#device-data-transfer').hide();
 }
 
 function populateButtons() {
@@ -227,9 +277,13 @@ function getSerialPorts() {
     // 6. Receive, decode, save the buttons config.
 
     // When a port is selected
-    $("a[name$='port-selection']").click(function () {
+    $("a[name$='port-selection']").click(async function () {
       // If the port is already selected, abort
-      if ($(this).text() === portSelected) return;
+      //if ($(this).text() === portSelected) return;
+
+      if (port && port.isOpen) {
+        await port.close();
+      }
 
       portSelected = $(this).text();
       // Open the selected port
@@ -265,6 +319,7 @@ function getSerialPorts() {
 
         port.on('close', err => {
           onPortClosed();
+          getSerialPorts();
           console.log('Closed', err)
         })
         requestDeviceInfo();
@@ -365,6 +420,14 @@ $(() => {
       requestDeviceSettings();
 
     $('#device-data-controls-confirmation').hide();
+  });
+
+  $('#import-settings').click(function () {
+    importSettings();
+  });
+
+  $('#export-settings').click(function () {
+    exportSettings();
   });
 
   ////////////////////////

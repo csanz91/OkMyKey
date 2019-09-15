@@ -73,6 +73,11 @@ html, body, .container-fluid {
     text-align: end;
 }
 
+.left-aligned-buttons{
+  margin-left: 10px;
+  float: left;
+}
+
 #ports-error{
   color: red;
   margin: auto 10px;
