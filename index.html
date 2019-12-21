@@ -24,12 +24,46 @@
 
 <body>
 
+  <!-- Info Modal -->
+  <div class="modal fade" id="info-modal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 id='info-modal-title' class="modal-title"></h4>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Modal -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="loading-modal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered text-center" role="document">
+      <span class="fa fa-spinner fa-spin fa-3x w-100"></span>
+    </div>
+  </div>
+
   <div class="left-aligned-buttons" id="device-data-transfer" style="display: none; margin-right: 0px;">
 
-    <div class="btn-group" role="group">
-      <button type="button" id="export-settings" class="btn btn-secondary"><i class="fas fa-file-upload"></i></button>
-      <button type="button" id="import-settings" class="btn btn-secondary"><i class="fas fa-file-download"></i></button>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle fas fa-cog" type="button" id="dropdownMenuButton"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button type="button" id="export-settings" class="dropdown-item"><i class="fas fa-file-upload"></i> Export
+          Settings</button>
+        <button type="button" id="import-settings" class="dropdown-item"><i class="fas fa-file-download"></i> Import
+          Settings</button>
+        <button type="button" id="erase-settings" class="dropdown-item"><i class="fas fa-eraser"></i> Erase
+          Device</button>
+
+      </div>
     </div>
+
   </div>
 
   <div class="right-aligned-buttons">
@@ -49,8 +83,6 @@
       <button type="button" id="refresh-ports" class="btn btn-secondary fas fa-sync-alt"></button>
     </div>
   </div>
-
-
 
 
   <div id="button-selection-container" style="display: none;">

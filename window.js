@@ -8,6 +8,7 @@ const PRINT_MODE = "2";
 const keyPrefix = "S";
 const settingsHeader = "button settings: ";
 const infoHeader = "Info: ";
+const initHeader = "Settings initialized.";
 
 var portSelected = "";
 var selectedKey;
@@ -110,6 +111,13 @@ function importSettings() {
       }
     });
   });
+}
+
+function eraseSettings() {
+  loadingModal();
+  port.write(`clear\n`);
+  port.write(`init\n`);
+  requestDeviceSettings();
 }
 
 class ButtonSetting {
@@ -245,6 +253,16 @@ function setInputTextMaxLenght() {
   $("#text-input").attr('maxlength', deviceInfo.commandMaxLenght);
 }
 
+function showInfoModal(infoText) {
+  $('#loading-modal').modal('hide');
+  $("#info-modal-title").text(infoText);
+  $('#info-modal').modal('show');
+}
+
+function loadingModal() {
+  $('#loading-modal').modal('show');
+}
+
 function getSerialPorts() {
   serialport.list((err, ports) => {
     // Check for errors
@@ -314,6 +332,8 @@ function getSerialPorts() {
               setInputTextMaxLenght();
               onPortOpened(portSelected);
             }
+          } else if (buttonSettingsRaw.includes(initHeader)) {
+            showInfoModal("Settings Initialized.")
           }
         })
 
@@ -428,6 +448,10 @@ $(() => {
 
   $('#export-settings').click(function () {
     exportSettings();
+  });
+
+  $('#erase-settings').click(function () {
+    eraseSettings();
   });
 
   ////////////////////////
