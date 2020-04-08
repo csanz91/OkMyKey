@@ -1,6 +1,6 @@
 {
   "name": "OkMyKey",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "This application allows you to program your macro keyboard",
   "author": {
     "name": "Cesar Sanz Martinez",
@@ -10,15 +10,16 @@
   "main": "app.js",
   "scripts": {
     "start": "electron app.js",
+    "install": "electron-rebuild",
     "postinstall": "electron-builder install-app-deps",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
   "license": "ISC",
   "devDependencies": {
-    "electron": "^4.2.9",
+    "electron": "^4.2.12",
     "electron-builder": "^21.2.0",
-    "electron-rebuild": "^1.8.6",
+    "electron-rebuild": "^1.10.1",
     "electron-reload": "^1.5.0"
   },
   "dependencies": {
