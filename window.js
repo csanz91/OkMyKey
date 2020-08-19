@@ -67,9 +67,10 @@ function getKeyCode(keyName) {
 }
 
 function exportSettings() {
-  // You can obviously give a direct path without use the dialog (C:/Program Files/path/myfileexample.txt)
-  dialog.showSaveDialog((fileName) => {
-    if (fileName === undefined) {
+  dialog.showSaveDialog().then(result => {
+    var fileName = result.filePath;
+
+    if (fileName === undefined || result.canceled) {
       console.log("You didn't save the file");
       return;
     }
@@ -89,9 +90,10 @@ function exportSettings() {
 }
 
 function importSettings() {
-  dialog.showOpenDialog((fileNames) => {
+  dialog.showOpenDialog().then(result => {
+    var fileNames = result.filePaths;
     // fileNames is an array that contains all the selected files
-    if (fileNames === undefined) {
+    if (fileNames === undefined  || result.canceled) {
       console.log("No file selected");
       return;
     }
@@ -264,14 +266,10 @@ function loadingModal() {
 }
 
 function getSerialPorts() {
-  serialport.list((err, ports) => {
+  serialport.list().then((ports) => {
     // Check for errors
-    if (err) {
-      $('#ports-error').html(err.message);
-      return
-    } else {
-      $('#ports-error').html('');
-    }
+    $('#ports-error').html('');
+
 
     // No ports available error
     if (ports.length === 0) {
@@ -282,8 +280,8 @@ function getSerialPorts() {
     $('#ports-selection-list').html("");
     for (portIdx in ports) {
       var portData = ports[portIdx];
-      if (!portData.comName || !portData.serialNumber) continue;
-      $('#ports-selection-list').append(`<a class="dropdown-item" name="port-selection" href="#">${portData.comName}</a>`)
+      if (!portData.path || !portData.serialNumber) continue;
+      $('#ports-selection-list').append(`<a class="dropdown-item" name="port-selection" href="#">${portData.path}</a>`)
     }
 
     // Initial sequence:
@@ -345,6 +343,8 @@ function getSerialPorts() {
         requestDeviceInfo();
       })
     })
+  }).catch(err =>{
+    $('#ports-error').html(err.message);
   })
 }
 

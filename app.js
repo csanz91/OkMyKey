@@ -10,6 +10,10 @@ let window = null
 app.once('ready', () => {
   // Create a new window
   window = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true
+    },
+
     // Set the initial width to 800px
     width: 450,
     // Set the initial height to 600px
