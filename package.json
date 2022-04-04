@@ -1,6 +1,6 @@
 {
   "name": "OkMyKey",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "description": "This application allows you to program your macro keyboard",
   "author": {
     "name": "Cesar Sanz Martinez",
@@ -17,13 +17,15 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "electron": "^9.4.0",
-    "electron-builder": "^22.8.0",
-    "electron-rebuild": "^1.11.0",
-    "electron-reload": "^1.5.0",
-    "serialport": "^9.0.1"
+    "electron": "^18.0.1",
+    "electron-builder": "^22.14.13",
+    "electron-rebuild": "^3.2.7",
+    "electron-reload": "^1.5.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "serialport": "^10.4.0",
+    "@electron/remote": "^2.0.8"
+  },
   "build": {
     "appId": "OkMyKey",
     "icon": "build/icons/512x512.png",

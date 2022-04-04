@@ -1,6 +1,6 @@
-const serialport = require('serialport')
-const Delimiter = require('@serialport/parser-delimiter')
-const { dialog } = require('electron').remote
+const { SerialPort } = require('serialport')
+const { DelimiterParser } = require('@serialport/parser-delimiter')
+const { dialog } = require('@electron/remote')
 var fs = require('fs');
 
 const PRESS_MODE = "1";
@@ -93,7 +93,7 @@ function importSettings() {
   dialog.showOpenDialog().then(result => {
     var fileNames = result.filePaths;
     // fileNames is an array that contains all the selected files
-    if (fileNames === undefined  || result.canceled) {
+    if (fileNames === undefined || result.canceled) {
       console.log("No file selected");
       return;
     }
@@ -266,7 +266,7 @@ function loadingModal() {
 }
 
 function getSerialPorts() {
-  serialport.list().then((ports) => {
+  SerialPort.list().then(ports => {
     // Check for errors
     $('#ports-error').html('');
 
@@ -303,13 +303,13 @@ function getSerialPorts() {
 
       portSelected = $(this).text();
       // Open the selected port
-      port = new serialport(portSelected, function (err) {
+      port = new SerialPort({ path: portSelected , baudRate: 9600}, function (err) {
         if (err) {
           onPortClosed();
           $('#ports-error').html(err.message);
           return console.log('Error: ', err.message)
         }
-        const parser = port.pipe(new Delimiter({ delimiter: '\n' }));
+        const parser = port.pipe(new DelimiterParser({ delimiter: '\n' }))
 
         // Receive data from the serial port
         parser.on('data', function (data) {
@@ -343,7 +343,7 @@ function getSerialPorts() {
         requestDeviceInfo();
       })
     })
-  }).catch(err =>{
+  }).catch(err => {
     $('#ports-error').html(err.message);
   })
 }
