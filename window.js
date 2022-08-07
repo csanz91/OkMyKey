@@ -9,9 +9,12 @@ const keyPrefix = "S";
 const settingsHeader = "button settings: ";
 const infoHeader = "Info: ";
 const initHeader = "Settings initialized.";
+const physicalButtons = 8;
 
 var portSelected = "";
 var selectedKey;
+var pressedKey;
+var selectedPage = 0;
 var settingsAction = "";
 var port;
 var buttonsSettings = {};
@@ -128,7 +131,7 @@ class ButtonSetting {
     var settingsList = rawSettings.split("|");
 
     // Gets and validates the button number
-    var buttonNumber = settingsList.shift();
+    var buttonNumber = parseInt(settingsList.shift());
     if (buttonNumber < 0 || buttonNumber >= deviceInfo.buttonsNum)
       throw `${buttonNumber} is not a valid button number`;
     this.buttonNumber = buttonNumber;
@@ -303,7 +306,7 @@ function getSerialPorts() {
 
       portSelected = $(this).text();
       // Open the selected port
-      port = new SerialPort({ path: portSelected , baudRate: 9600}, function (err) {
+      port = new SerialPort({ path: portSelected, baudRate: 9600 }, function (err) {
         if (err) {
           onPortClosed();
           $('#ports-error').html(err.message);
@@ -363,15 +366,9 @@ $(() => {
   // Key selection
   ////////////////////////
 
-  $("input[name$='letter']").click(function () {
-    $(this).button('toggle');
-  })
-
-  $('#keyboard li').click(function () {
-    var $this = $(this),
-      key = $this.html(); // If it's a lowercase letter, nothing happens to this variable
-
-    selectedKey = parseInt(key.replace(keyPrefix, ""), 10) - 1;
+  function selectKey() {
+    selectedKey = pressedKey + selectedPage * physicalButtons;
+    console.log(selectedKey);
 
     // Load the button settings into the input fields
     loadButtonSettings();
@@ -383,6 +380,31 @@ $(() => {
     $('#settings-area').show();
     $('#settings-area-mode').show();
     $('#device-data-controls').show();
+  }
+
+  $("input[name$='letter']").click(function () {
+    $(this).button('toggle');
+  })
+
+  $('#pages button').click(function () {
+    let $this = $(this);
+    let key = $this.html();
+    $('#pages button').removeClass('selected');
+    $(this).addClass("selected");
+
+    selectedPage = parseInt(key.replace(keyPrefix, ""), 10) - 1;
+    if (pressedKey >= 0) {
+      selectKey();
+    }
+  });
+
+
+  $('#keyboard li').click(function () {
+    let $this = $(this);
+    let key = $this.html();
+
+    pressedKey = parseInt(key.replace(keyPrefix, ""), 10) - 1;
+    selectKey();
   });
 
   ////////////////////////
