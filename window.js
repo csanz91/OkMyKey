@@ -50,7 +50,10 @@ const keysMap = {
   0xCA: 'F9',
   0xCB: 'F10',
   0xCC: 'F11',
-  0xCD: 'F12'
+  0xCD: 'F12',
+  0xE9: 'Volume Up', // Paaa8
+  0xEA: 'Volume Down', // Paaa8
+  0xE2: 'Mute' // Paaa8
 }
 
 // Gets the character representation.
