@@ -31,6 +31,7 @@ const keysMap = {
   0x80: 'Ctrl',
   0x82: 'Alt',
   0x81: 'Shift',
+  0x20: 'Space',
   0xB3: 'Tab',
   0x83: 'Win',
   0xB2: 'Backspace',
